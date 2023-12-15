@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -54,6 +56,29 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		new Main();
+		
+		Connection connection = Connection.getInstance();
+		
+		String fileTeams = "src\\teams.csv";
+		List<String[]> readDataTeams = connection.readCSV(fileTeams);
+		for(String[] record : readDataTeams) {
+			System.out.println(String.join(", ", record));
+		}
+		
+		List<String[]> writeDataTeams = new ArrayList<>();
+		writeDataTeams.add(new String[]{id, nama});
+		connection.writeCSV(fileTeams, writeDataTeams);
+		
+		
+		String fileUser = "src\\user.csv";
+		List<String[]> readDataUser = connection.readCSV(fileUser);
+		for(String[] record : readDataUser) {
+			System.out.println(String.join(", ", record));
+		}
+		
+		List<String[]> writeDataUser = new ArrayList<>();
+		writeDataUser.add(new String[]{nim, nama, idteam});
+		connection.writeCSV(fileUser, writeDataUser);
 	}
 
 }
