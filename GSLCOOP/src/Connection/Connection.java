@@ -1,3 +1,4 @@
+package Connection;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +14,17 @@ public class Connection {
 	        return instance;
 	    }
 	    
-	    public List<String[]> readCSV(String file) {
-	        List<String[]> records = new ArrayList<>();
+	    public ArrayList<String> readCSV(String file) {
+	        ArrayList<String> records = new ArrayList<>();
 	        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 	            String line;
+	            String nama;
+	            String id;
 	            while ((line = reader.readLine()) != null) {
 	                String[] values = line.split(",");
-	                records.add(values);
+	                id = values[0];
+	                nama = values[1];
+	                records.add(id+","+nama);
 	            }
 	        } catch (IOException e) {
 	            e.printStackTrace();
@@ -27,13 +32,15 @@ public class Connection {
 	        return records;
 	    }
 
-	    public void writeCSV(String file, List<String[]> data) {
-	        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-	            for (String[] record : data) {
+	    public static void writeCSV(String file, ArrayList<String> listNama) {
+	        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+	            for (String record : listNama) {
 	                String line = String.join(",", record);
+	                System.out.println(line);
 	                writer.write(line);
 	                writer.newLine();
 	            }
+	            writer.close();
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
